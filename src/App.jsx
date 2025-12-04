@@ -1,10 +1,11 @@
 import Navbar from "./componentes/navbar"
+import ItemListContainer from "./componentes/ItemListConteiner"
 
 function App() {
   return (
     <main>
     <Navbar />
-          <div>App</div>
+          <ItemListContainer texto = "Bienvenido a nuestra tienda!" />
 </main>
   )
 }
