@@ -5,7 +5,8 @@ function App() {
   return (
     <main>
     <Navbar />
-          <ItemListContainer texto = "Bienvenido a nuestra tienda!" />
+          <ItemListContainer />
+
 </main>
   )
 }
