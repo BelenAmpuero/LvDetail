@@ -1,12 +1,20 @@
-import Navbar from "./componentes/Navbar.jsx"
+import NavbarContainer from "./componentes/NavbarContainer.jsx"
 import ItemListContainer from "./componentes/ItemListContainer.jsx"
+import CartContainer from "./componentes/CartContainer.jsx"
+import { BrowserRouter, Routes, Route } from "react-router";
+
 
 function App() {
   return (
     <main>
-    <Navbar />
-          <ItemListContainer />
-
+      <BrowserRouter>
+      <NavbarContainer />
+      <Routes>
+        <Route path='/' element= {<ItemListContainer />} />
+        <Route path="/cart" element={<CartContainer/>}/>
+        <Route path="/category/:id" element={<ItemListContainer/>}/>
+        </Routes>
+</BrowserRouter>
 </main>
   )
 }
