@@ -1,9 +1,12 @@
+import { useNavigate } from "react-router"
+
 function Item({prod}) {
+    const navigate = useNavigate()
     return (
-         <div key={prod.id} className="card bg-base-100 w-96 shadow-sm">
+        <div key={prod.id} className="card bg-base-100 w-96 shadow-sm">
         <figure className="px-10 pt-10">
             <img
-            src={prod.images[0]}
+            src={prod.url[0]}
             alt={prod.title}
             className="rounded-xl"
         />
@@ -14,7 +17,9 @@ function Item({prod}) {
         <p>${prod.price}</p>
 
         <div className="card-actions">
-        <button className="btn btn-primary">Comprar</button>
+        <button 
+        className="btn btn-primary"
+        onClick={() => navigate (`/item/${prod.id}`)}>Comprar</button>
         </div>
         </div>
         </div>
