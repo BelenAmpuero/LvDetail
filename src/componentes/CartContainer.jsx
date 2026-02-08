@@ -39,7 +39,7 @@ function CartContainer(params) {
     return(
         <div className="flex flex-col justify-center mt-20 lg:flex-row">
     <div className = 'w-11/12 lg: w-1/3 p-3 text-xl font-semibold'>
-{      cart.map(prod => <CartItem  key={prod.id} name={prod.title} quantity={prod.quantity} img={prod.thumbnail}/>)}
+{      cart.map(prod => <CartItem  key={prod.id} name={prod.name} quantity={prod.quantity} img={prod.url}/>)}
     </div>
 <div className="w-11/12 lg:w-1/3 p-3">
 <p className="text-3xl mb-10">TOTAL: ${total}</p>
@@ -48,19 +48,10 @@ function CartContainer(params) {
 
 <div className="m-6 flex justify-center"><Link
 to = "/"
-className="
-    inline-flex items-center justify-center
-    px-6 py-3
-    rounded-2xl
-    bg-[#4A3568] text-white
-    font-medium
-    transition-all duration-200
-    hover:bg-gray-800
-    hover:scale-[1.02]
-    active:scale-95">
+className="inline-flex items-center justify-center px-6 py-3 rounded-2xl bg-[#4A3568] text-white font-medium transition-all duration-200 hover:bg-gray-800 hover:scale-[1.02] active:scale-95">
 Ver más productos
-
 </Link></div>
+
 </div>
 </div>
     )

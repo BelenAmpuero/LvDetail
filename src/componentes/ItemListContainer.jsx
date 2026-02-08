@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ItemList from "./ItemList";
-import { getProducts } from "../firebase/db";
+import { getProducts, getProductsByCategory } from "../firebase/db";
 import { useParams } from "react-router";
 import Skeleton from "./Skeleton";
 
@@ -13,27 +13,33 @@ function ItemListContainer (){
 useEffect(()=> {
     setLoading(true);
 
-// const url = 'https://dummyjson.com/products'
-// const urlCategories = `https://dummyjson.com/products/category/${id}`
+     const fetchData = async () => {
+    try {
+      const prods = id
+        ? await getProductsByCategory(id)
+        : await getProducts();
 
-//     fetch(id ? urlCategories : url)
-//     .then(res => res.json())
-//     .then(data =>
-//     {setItems(data.products);
-//     setLoading(false);
-//     })
-//     .catch(() => {
-//         setLoading(false);
-//     });
-getProducts()
-.then(prods => {
-    setItems(prods);
-setLoading(false);
-})
-.catch(() => {
-    setLoading(false);
-});
+      setItems(prods);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchData();
 }, [id]);
+
+// getProducts()
+// .then(prods => { setItems(prods);
+
+// setLoading(false);
+// })
+// .catch(() => {
+//     setLoading(false);
+// });
+// getProductsByCategory(id)
+// }, [id]);
 
 
 if (loading) {
