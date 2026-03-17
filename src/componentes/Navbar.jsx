@@ -1,32 +1,129 @@
-import logo from '../assets/logoSinFondo.png'
+import logo from "../assets/iTechLogo2.png"
 import CartWidget from "./CartWidget"
-import { Link } from 'react-router'
+import { Link } from "react-router"
+import { useState, useEffect } from "react"
 
+function Navbar({ categories }) {
 
-function Navbar ({categories}){
+  const [scrolled, setScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState("")
 
-    return (
-        <header className='bg-black text-white p-3 flex justify-between items-center'>
-            <div className='flex flex-row gap-x-4 items-center'>
-            <Link className='text-3xl' to='/'>LvDetail</Link>
-            <img src={logo} className='w-15'/>
-            </div>
-            <nav className='flex gap-5'>
-            <div className="relative group">
-                <div tabIndex={0} role="button" className="btn m-1">Categorias</div>
-                <ul tabIndex={-1} className="absolute top-full left-0 hidden group-hover:grid bg-base-100 rounded-box w-96 p-2 shadow-sm  grid grid-cols-2 gap-2 z-50">
-                    
+  // Detecta scroll para cambiar estilo del navbar
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40)
+    }
+
+    window.addEventListener("scroll", handleScroll)
+
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  // Detecta cuando aparece la sección About
+  useEffect(() => {
+
+    const section = document.querySelector("#about")
+
+    if (!section) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+
+        if (entry.isIntersecting) {
+          setActiveSection("about")
+        } else {
+          setActiveSection("")
+        }
+
+      },
+      {
+        threshold: 0.4
+      }
+    )
+
+    observer.observe(section)
+
+    return () => observer.disconnect()
+
+  }, [])
+
+  return (
+
+    <header
+      className={`sticky top-0 z-50 flex justify-between items-center px-8 text-white transition-all duration-300
+      ${scrolled ? "bg-black/50 backdrop-blur-md py-2 shadow-md" : "bg-black py-4"}`}
+    >
+
+      {/* logo */}
+
+      <div className="flex items-center">
+        <Link to="/">
+          <img
+            src={logo}
+            className={`transition-all duration-300 ${scrolled ? "h-8" : "h-12"}`}
+          />
+        </Link>
+      </div>
+
+      {/* navegación */}
+
+      <nav className="flex gap-8 items-center">
+
+        {/* categorias */}
+
+        <div className="relative group cursor-pointer">
+
+          <div>Categorias</div>
+
+          <ul className="absolute pt-3 left-0 hidden group-hover:grid bg-base-100 text-white rounded-box w-96 p-2 shadow-sm grid-cols-2 gap-2 z-50">
+
             {categories.map(cat => (
-            <li key = {cat.id}>
-            <Link to= {`/category/${cat.name}`}>{cat.name}</Link>
-            </li>
-    ))}
-        </ul>
-</div>
-            </nav>
-            <CartWidget />
-        </header>
-    );
+              <li
+                key={cat.id}
+                className="hover:bg-base-200 rounded px-2 py-1"
+              >
+                <Link to={`/category/${cat.name}`}>
+                  {cat.name}
+                </Link>
+              </li>
+            ))}
+
+          </ul>
+
+        </div>
+
+        {/* pedido */}
+
+        <Link
+          to="/cart"
+          className="cursor-pointer hover:text-accent transition"
+        >
+          Tu pedido
+        </Link>
+
+        {/* sobre nosotros */}
+
+        <Link
+          to="/#about"
+          className={`cursor-pointer transition ${
+    activeSection === "about"
+      ? "text-accent font-semibold"
+      : "hover:text-accent"
+  }`}
+        >
+          Sobre nosotros
+        </Link>
+
+      </nav>
+
+      {/* carrito */}
+
+      <div className="flex items-center">
+        <CartWidget />
+      </div>
+
+    </header>
+  )
 }
 
 export default Navbar

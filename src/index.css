@@ -1,2 +1,17 @@
 @import "tailwindcss";
+
 @plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "lvtheme";
+
+  --color-primary: #ffffff;
+  --color-secondary: #000000;
+  --color-accent: #00e5e5;
+
+  --color-neutral: #6b7280;
+
+  --color-base-100: #0f1720;
+  --color-base-200: #1a2330;
+  --color-base-300: #2b3645;
+}

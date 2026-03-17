@@ -1,5 +1,6 @@
-import { getFirestore, collection, getDocs, query, where, doc, getDoc } from "firebase/firestore";
+import { getFirestore, collection, getDocs, query, where, doc, getDoc, addDoc, serverTimestamp } from "firebase/firestore";
 import { app } from './config.js';
+import { DribbbleIcon } from "lucide-react";
 
 const db = getFirestore(app)
 
@@ -54,3 +55,21 @@ if (docSnap.exists()) {
 }
 }
 
+export const createOrder = async (user, item, total) => {
+
+    const order = {
+        user,
+        item,
+        total,
+        time: serverTimestamp()
+    }
+  try {
+    const docRef = await addDoc(collection(db, "orders"), order );
+    return docRef.id 
+
+    console.log("Documento creado con ID:", docRef.id);
+  } catch (error) {
+    console.error("Error al agregar documento:", error);
+  }
+    
+};

@@ -5,23 +5,28 @@ import ItemDetailContainer from "./componentes/ItemDetailContainer.jsx";
 import { BrowserRouter, Routes, Route } from "react-router";
 import { Toaster } from 'react-hot-toast';
 import CartProvider from "./componentes/context/CartProvider";
-
+import Footer from "./componentes/Footer"
+import AboutUs from "./componentes/AboutUs"
+import ScrollTop from "./ScrollTop.jsx";
 
 
 
 function App() {
   return (
-    <main>
+    <main className=" bg-primary min-h-screen flex flex-col">
       <CartProvider>
       <BrowserRouter>
             <Toaster position="top-right" />
-      <NavbarContainer />
+        <ScrollTop />
+      <NavbarContainer className />
       <Routes>
         <Route path='/' element= {<ItemListContainer />} />
         <Route path="/cart" element={<CartContainer/>}/>
         <Route path="/category/:id" element={<ItemListContainer/>}/>
         <Route path="/item/:id" element={<ItemDetailContainer/>}/>
         </Routes>
+
+        <Footer/>
 </BrowserRouter>
 </CartProvider>
 </main>
@@ -29,3 +34,4 @@ function App() {
 }
 
 export default App
+

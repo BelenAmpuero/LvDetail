@@ -2,24 +2,31 @@ import { useNavigate } from "react-router"
 
 function Item({prod}) {
     const navigate = useNavigate()
+if (!prod){
+    return (  <h2 className="text-2xl font-semibold text-gray-700">
+        Producto no encontrado
+    </h2>
+
+)} else {
+
     return (
-        <div key={prod.id} className="card bg-base-100 w-96 shadow-sm">
-        <figure className="px-10 pt-10  h-60 flex items-center justify-center">
+        <div key={prod.id} className="card bg-white w-72 shadow-md hover:shadow-xl transition duration-300">
+        <figure className="h-56 flex items-center justify-center bg-gray-50">
             <img
             src={prod.url}
             alt={prod.name}
-            className="rounded-xl"
+            className="h-full object-contain p-6"
         />
         </figure>
 
-        <div className="card-body items-center text-center flex flex-col justify-between">
+        <div className="card-body items-center text-center flex flex-col gap-3">
         <div>
-        <h2 className="card-title">{prod.name}</h2>
+        <h2 className="card-title text-gray-800">{prod.name}</h2>
         <p>${prod.price}</p>
 </div>
-        <div className="card-actions">
+        <div className="card-actions w-full">
         <button 
-        className="btn bg-[#6D28D9]  hover:bg-gray-800 active:scale-95 transition"
+        className="btn btn-outline border-gray-400 text-base-100 hover:bg-accent hover:border-accent hover:text-base-100 w-full transition hover:shadow-[0_0_12px_theme(colors.accent)]"
         onClick={() => navigate (`/item/${prod.id}`)}>Comprar</button>
         </div>
         </div>
@@ -27,5 +34,5 @@ function Item({prod}) {
     )
     
 }
-
+}
 export default Item

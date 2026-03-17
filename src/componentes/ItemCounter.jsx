@@ -1,19 +1,27 @@
 import { useState, useContext } from "react"
-import { CartContext } from "./context/CartContext"
-import toast, { Toaster } from 'react-hot-toast'
+import { CartContext  } from "./context/CartContext"
+import toast, { Toaster } from "react-hot-toast"
 
+function ItemCounter({ product }) {
+  const [count, setCount] = useState(1)
+  const { addToCart } = useContext(CartContext)
 
+  const increment = () => {
+    if (count < product.stock) {
+      setCount(count + 1)
+    }
+  }
 
+  const decrement = () => {
+    if (count > 1) {
+      setCount(count - 1)
+    }
+  }
 
-function ItemCounter({product}) {
-  const [count, setCount] = useState(0)
-  const { addToCart } = useContext (CartContext)
   const handleAddToCart = () => {
-        if (count < 1) return
-  addToCart ({...product, quantity : count})
-  toast(`Se agregó ${product.title} al carrito`)}
-  
-
+    addToCart({ ...product, quantity: count })
+    toast(`Se agregó ${product.name} al carrito`)
+  }
 
   return (
     <div className="flex flex-col items-center gap-4 p-4 border rounded-xl shadow-sm w-64">
@@ -23,28 +31,35 @@ function ItemCounter({product}) {
 
       <div className="flex gap-3">
         <button
-          onClick={() => setCount(Math.max(0, count - 1))}
-          className="px-4 py-2 rounded-lg bg-[#6D28D9] hover:bg-gray-300 active:scale-95 transition"
+          onClick={decrement}
+          disabled={count === 1}
+          className="px-4 py-2 rounded-lg bg-[#6D28D9] disabled:opacity-40"
         >
           −
         </button>
 
         <button
-          onClick={() => setCount(count + 1)}
-          className="px-4 py-2 rounded-lg bg-[#6D28D9] hover:bg-gray-300 active:scale-95 transition"
+          onClick={increment}
+          disabled={count === product.stock}
+          className="px-4 py-2 rounded-lg bg-[#6D28D9] disabled:opacity-40"
         >
           +
         </button>
       </div>
 
       <button
-        className="mt-2 w-full py-2 rounded-lg bg-black text-white hover:bg-gray-800 active:scale-95 transition font-medium"
-      onClick={handleAddToCart}
+        disabled={product.stock === 0}
+        onClick={handleAddToCart}
+        className="mt-2 w-full py-2 rounded-lg bg-black text-white disabled:opacity-40"
       >
         Agregar al carrito
       </button>
-              <Toaster />
 
+      <p className="text-sm text-gray-500">
+        Stock disponible: {product.stock}
+      </p>
+
+      <Toaster />
     </div>
   )
 }

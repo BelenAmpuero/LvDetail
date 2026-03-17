@@ -3,9 +3,12 @@ import ItemList from "./ItemList";
 import { getProducts, getProductsByCategory } from "../firebase/db";
 import { useParams } from "react-router";
 import Skeleton from "./Skeleton";
+import banner from "../assets/baner1000.png";
+import AboutUs from "./AboutUs";
 
 
 function ItemListContainer (){ 
+
     const [items, setItems] = useState([])
     const {id} = useParams()
     const [loading, setLoading] = useState(true);
@@ -30,27 +33,20 @@ useEffect(()=> {
   fetchData();
 }, [id]);
 
-// getProducts()
-// .then(prods => { setItems(prods);
-
-// setLoading(false);
-// })
-// .catch(() => {
-//     setLoading(false);
-// });
-// getProductsByCategory(id)
-// }, [id]);
-
-
 if (loading) {
     return(
         <Skeleton/>
     )
 }
 
-    return <ItemList items = {items} />   
+    return (
+      <>
+      <img src={banner} className="w-full h-[400px] object-cover"/>
+    <ItemList items = {items} /> 
+     <AboutUs/>
+    </>  
+    
+ )
 }
-
-
 
 export default ItemListContainer;
