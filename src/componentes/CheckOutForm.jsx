@@ -111,6 +111,3 @@ function CheckoutForm({ onConfirm }) {
 
 export default CheckoutForm;
 
-let x = 'Hola';
-
-console.log(typeof x);
